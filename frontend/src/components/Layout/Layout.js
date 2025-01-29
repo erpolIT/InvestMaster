@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, Link } from 'react-router-dom';
 import { Bell, Search, Envelope, User, Cog, List, LogOut } from 'lucide-react';
 // import '../../assets/bootstrap/css/bootstrap.min.css';  
 // import '../../assets/fonts/fontawesome-all.min.css';  
@@ -70,9 +70,9 @@ const Sidebar = () => {
                         </a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="/profile">
+                        <Link className="nav-link" to="/users">
                             <span>Profile</span>
-                        </a>
+                        </Link>
                     </li>
                 </ul>
                 <div className="text-center d-none d-md-inline">

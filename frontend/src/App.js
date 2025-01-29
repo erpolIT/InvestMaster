@@ -69,8 +69,12 @@
 // App.jsx
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './components/LoginPage/LoginPage';
+import RegisterPage from './components/RegisterPage/RegisterPage';
 import Layout from './components/Layout/Layout';
 import Dashboard from './components/Dashboard/Dashboard';
+import UserList from './components/Example/UserList'
+import LoginPageTest from './components/LoginPageTest/LoginPageTest';
+import RequireAuth from './components/RequireAuth/RequireAuth';
 
 // import Profile from './components/Profile/Profile';
 // import Settings from './components/Settings/Settings';
@@ -80,24 +84,22 @@ import Dashboard from './components/Dashboard/Dashboard';
 
 // Komponent do sprawdzania czy użytkownik jest zalogowany
 
-// const ProtectedRoute = ({ children }) => {
-//     const token = localStorage.getItem('token');
-//     if (!token) {
-//         return <Navigate to="/login" replace />;
-//     }
-//     return children;
-// };
+import ProtectedRoute from './utils/ProtectedRoute';
+
 
 const App = () => {
     return (
-        <BrowserRouter>
             <Routes>
                 <Route path="/login" element={<LoginPage />} />
-                <Route path="/" element={<Layout />}>
-                    <Route path="dashboard" element={<Dashboard />} />
+                <Route path="/users" element={<UserList />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route element={<RequireAuth />}>
+                    <Route path="/" element={<Layout/>}>
+                        <Route path="dashboard" element={<Dashboard />} />
+                    </Route>
                 </Route>
+                
             </Routes>
-        </BrowserRouter>
     );
 };
 

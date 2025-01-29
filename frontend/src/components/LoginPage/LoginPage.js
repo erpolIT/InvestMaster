@@ -1,11 +1,14 @@
 ﻿// LoginPage.jsx
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
+import useAuth from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import './LoginPage.css';
 
-import loginImage from '../../assets/img/pexels-photo-7947629.jpeg';  // Import obrazka
+import loginImage from '../../assets/img/pexels-photo-7947629.jpeg';
+import {Link} from "react-router";  // Import obrazka
 
 const LoginPage = () => {
+    const { auth, setAuth } = useAuth();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: '',
@@ -25,7 +28,7 @@ const LoginPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('https://localhost:5000/login', {
+            const response = await fetch('http://localhost:5000/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -35,18 +38,24 @@ const LoginPage = () => {
 
             if (response.ok) {
                 const data = await response.json();
-                localStorage.setItem('token', data.token);
-                navigate('/dashboard');
+                //console.log('Token-data:', token);
+                setAuth({ token: data.token });
+                navigate('/dashboard', { replace: true });
             } else {
                 setError('Nieprawidłowe dane logowania');
             }
         } catch (err) {
             setError('Wystąpił błąd podczas logowania');
+            if(!err?.response) {
+                console.log('Błąd po stronie klienta:', err.message);
+            }else if(err.response?.status === 400){
+                console.log('Missing user')
+            }
         }
     };
+    
 
     return (
-        <body className="bg-gradient-primary" style={{ background: 'rgb(136,149,195)' }}>
         <div className="container">
             <div className="row justify-content-center">
                 <div className="col-md-9 col-lg-12 col-xl-10">
@@ -69,7 +78,10 @@ const LoginPage = () => {
                                                 {error}
                                             </div>
                                         )}
-                                        <form className="user" onSubmit={handleSubmit}>
+                                        <form className="user"  onSubmit={(e) => {
+                                            console.log("Form submitted");
+                                            handleSubmit(e);
+                                        }} >
                                             <div className="mb-3">
                                                 <input
                                                     className="form-control form-control-user"
@@ -136,7 +148,7 @@ const LoginPage = () => {
                                             <a className="small" href="forgot-password.html">Forgot Password?</a>
                                         </div>
                                         <div className="text-center">
-                                            <a className="small" href="register.html">Create an Account!</a>
+                                            <Link className="small" to="/register">Create an Account!</Link>
                                         </div>
                                     </div>
                                 </div>
@@ -146,7 +158,6 @@ const LoginPage = () => {
                 </div>
             </div>
         </div>
-        </body>
     );
 };
 
