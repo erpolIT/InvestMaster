@@ -60,3 +60,18 @@ InvestMaster is a web application designed to manage investments, allowing users
    ```sh
    docker-compose up --build
 
+
+## Screenshots
+
+### Login Screen
+![Login Screen](./screenshots/login.png)
+
+### User Dashboard
+![User Dashboard](./screenshots/dashboard.png)
+
+### Market Data
+![Market Data](./screenshots/market_data.png)
+
+
+
+
