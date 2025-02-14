@@ -5,14 +5,14 @@ InvestMaster is a web application designed to manage investments, allowing users
 ## Technologies
 
 - **Backend:** .NET (ASP.NET Core)
-- **Frontend:** React (Vite)
-- **Database:** SQL Server / PostgreSQL
+- **Frontend:** React
+- **Database:** PostgreSQL
 - **Containerization:** Docker
 - **UI Framework:** Tailwind CSS / Material UI
 
 ## Features
 
-- **User Authentication:** Login, registration, and OAuth integration (Google/Facebook).
+- **User Authentication:** Login, registration.
 - **Market Overview:** Real-time quotes for cryptocurrencies, stocks, and ETFs.
 - **Asset Management:** Buy and sell assets.
 - **User Dashboard:** Overview of earnings and portfolio analysis.
@@ -33,24 +33,30 @@ InvestMaster is a web application designed to manage investments, allowing users
    cd backend
    
 2. Install dependencies:
+   ```sh
    dotnet restore
 
 3. Run the application:
+   ```sh
    dotnet run
 
 ### Frontend Setup
 
 1. Navigate to the frontend directory:
+   ```sh
    cd frontend
 
 2. Install dependencies:
+   ```sh
    npm install
 
 3. Run the application:
+   ```sh
    npm run dev
 
 ### Running with Docker
 
 1. Build and run the containers:
+   ```sh
    docker-compose up --build
 
