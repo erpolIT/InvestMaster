@@ -2,21 +2,40 @@ using System.Text;
 using backend.Database;
 using backend.Extensions;
 using backend.Infrastructure;
+using backend.Repositories;
+using backend.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+
+
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGenWithAuth();
+
+
+builder.Services.AddTransient<MarketDataService>();
+builder.Services.AddScoped<IAssetRepository, AssetRepository>();
+builder.Services.AddScoped<IAssetService, AssetService>();
+builder.Services.AddScoped<PortfolioService>();
+builder.Services.AddScoped<PortfolioService>();
+builder.Services.AddScoped<InvestmentService>();
+builder.Services.AddScoped<TransactionService>();
+builder.Services.AddScoped<AccountBalanceService>();
+builder.Services.AddHttpClient<IDataService, MarketDataService>();
+builder.Services.AddHostedService<MarketDataSyncService>();
 builder.Services.AddSingleton<TokenProvider>();
 builder.Services.AddAuthorization();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -29,6 +48,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ClockSkew = TimeSpan.Zero
         };
     });
+
 
 builder.Services.AddIdentityCore<User>()
     .AddEntityFrameworkStores<ApiDbContext>();
@@ -63,13 +83,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("AllowReactApp");
+
 app.UseAuthentication();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseCors("AllowReactApp");
 
 app.Run();
 

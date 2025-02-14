@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using backend.Database;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,12 +22,23 @@ namespace backend.Controllers
             var users = _context.Users.ToList();
             return Ok(users);
         }
+        
+        [HttpGet("me")]
+        public IActionResult GetMe()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            Console.WriteLine(userId);
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
 
-        // Akcja POST, która przyjmuje nowego użytkownika
+            return Ok(userId);
+        }
+
         [HttpPost]
         public IActionResult AddUser([FromBody] string user)
         {
-            // Logika dodania użytkownika (tu jest tylko przykład)
             return Ok($"User {user} added successfully.");
         }
     }

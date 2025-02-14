@@ -2,6 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json.Serialization;
 using backend.Database;
 using backend.Infrastructure;
 using Microsoft.AspNetCore.Identity;
@@ -70,12 +71,17 @@ public class LoginDto
 
 public class RegisterDto
 {
+    [Required]
+    [JsonPropertyName("first_name")]
     public string FirstName { get; set; }
+    [Required]
+    [JsonPropertyName("last_name")]
     public string LastName { get; set; }
     [Required]
     public string Email { get; set; }
     [Required]
     public string Password { get; set; }
-    
+    [Required]
+    [JsonPropertyName("password_repeat")]
     public string ConfirmPassword { get; set; }
 }

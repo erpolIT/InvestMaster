@@ -1,38 +1,9 @@
 ﻿import React from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { Bell, Search, Envelope, User, Cog, List, LogOut } from 'lucide-react';
-// import '../../assets/bootstrap/css/bootstrap.min.css';  
-// import '../../assets/fonts/fontawesome-all.min.css';  
-
-
-
-
-// const Layout = ({ children }) => {
-//     // const { user } = useContext(AuthContext);
-//     //
-//     // if (!user) return null;
-//
-//     return (
-//         <div id="wrapper" className="min-h-screen">
-//             <Sidebar />
-//             <div className="flex flex-col flex-1">
-//                 <TopBar />
-//                 <main className="p-6 bg-gray-100 flex-1">
-//                     {children}
-//                 </main>
-//                 <Footer />
-//             </div>
-//         </div>
-//     );
-// };
-//
-
 
 const Layout = () => {
-    // Jeśli masz AuthContext, możesz tutaj sprawdzać, czy użytkownik jest zalogowany
-    // const { user } = useContext(AuthContext);
-    // if (!user) return <Redirect to="/login" />;
-
+    
     return (
         <div id="wrapper">
             <Sidebar/>
@@ -60,18 +31,23 @@ const Sidebar = () => {
             <div className="container-fluid d-flex flex-column p-0">
                 <a className="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                     <div className="sidebar-brand-icon rotate-n-15"><i className="fas fa-laugh-wink"></i></div>
-                    <div className="sidebar-brand-text mx-3"><span>Brand</span></div>
+                    <div className="sidebar-brand-text mx-3"><span>InvestMaster</span></div>
                 </a>
                 <hr className="sidebar-divider my-0" />
                 <ul className="navbar-nav text-light" id="accordionSidebar">
                     <li className="nav-item">
-                        <a className="nav-link active" href="/">
+                        <Link className="nav-link" to="/dashboard">
                             <span>Dashboard</span>
-                        </a>
+                        </Link>
                     </li>
                     <li className="nav-item">
                         <Link className="nav-link" to="/users">
                             <span>Profile</span>
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/marketdata">
+                            <span>Market</span>
                         </Link>
                     </li>
                 </ul>
@@ -126,7 +102,7 @@ const Footer = () => {
         <footer className="bg-white sticky-footer">
             <div className="container my-auto">
                 <div className="text-center my-auto copyright">
-                    <span>Copyright © Brand {new Date().getFullYear()}</span>
+                    <span>Copyright © InvestMaster {new Date().getFullYear()}</span>
                 </div>
             </div>
         </footer>
